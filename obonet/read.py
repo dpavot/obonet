@@ -48,7 +48,7 @@ def read_obo(path_or_file):
             edge_tuples.append(edge_tuple)
 
     for term0, typedef, term1 in edge_tuples:
-        graph.add_edge(term0, term1, key=typedef)
+        graph.add_edge(term0, term1, edgetype=typedef)
 
     return graph
 
