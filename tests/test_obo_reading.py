@@ -1,4 +1,5 @@
 import os
+import pathlib
 
 import pytest
 
@@ -21,12 +22,15 @@ def test_read_taxrank_file():
 
 
 @pytest.mark.parametrize('extension', ['', '.gz', '.bz2', '.xz'])
-def test_read_taxrank_path(extension):
+@pytest.mark.parametrize('pathlike', [False, True])
+def test_read_taxrank_path(extension, pathlike):
     """
     Test reading the taxrank ontology OBO file from paths. Includes reading
     compressed paths.
     """
     path = os.path.join(directory, 'data', 'taxrank.obo' + extension)
+    if pathlike:
+        path = pathlib.Path(path)
     taxrank = obonet.read_obo(path)
     assert len(taxrank) == 61
 
@@ -41,6 +45,17 @@ def test_read_taxrank_url(extension):
     url += extension
     taxrank = obonet.read_obo(url)
     assert len(taxrank) == 61
+
+
+def test_read_brenda_subset():
+    """
+    Test reading a subset of the BrendaTissue.obo file. This file does not set
+    the ontology tag. See https://github.com/dhimmel/obonet/issues/10.
+    """
+    path = os.path.join(directory, 'data', 'brenda-subset.obo')
+    brenda = obonet.read_obo(path)
+    assert len(brenda) == 1
+    assert brenda.graph['name'] is None
 
 
 @pytest.mark.parametrize('ontology', ['doid', 'go', 'pato'])
