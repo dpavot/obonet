@@ -36,7 +36,7 @@ def open_read_file(path):
             return io.StringIO(text)
         else:
             compressed_bytes = io.BytesIO(content)
-            return opener(compressed_bytes, 'rt')
+            return opener(compressed_bytes, 'rt', encoding="utf-8")
 
     # Read from file
     return opener(path, 'rt')
