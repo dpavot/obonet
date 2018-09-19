@@ -36,10 +36,10 @@ def open_read_file(path):
             return io.StringIO(text)
         else:
             compressed_bytes = io.BytesIO(content)
-            return opener(compressed_bytes, 'rt', encoding="utf-8")
+            return opener(compressed_bytes, 'rt')
 
     # Read from file
-    return opener(path, 'rt')
+    return opener(path, 'rt', encoding="utf-8")
 
 
 encoding_to_module = {
