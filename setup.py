@@ -14,7 +14,7 @@ version = pattern.search(text).group(1)
 
 # long_description
 readme_path = directory.joinpath('README.md')
-with readme_path.open() as read_file:
+with readme_path.open(encoding = 'utf-8') as read_file:
     long_description = read_file.read()
 
 setuptools.setup(
